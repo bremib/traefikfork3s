@@ -3,7 +3,7 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   name: traefik-dashboard-http
-  namespace: kube-system
+  namespace: traefik
 spec:
   entrypoints:
   - http
@@ -21,7 +21,7 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   name: httpwordpress
-  namespace: kube-system
+  namespace: traefik
 spec:
   entryPoints:
     - http
@@ -41,7 +41,7 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   name: httpswordpress
-  namespace: kube-system
+  namespace: traefik
 spec:
   entryPoints:
     - https
@@ -63,7 +63,7 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   name: safewordpresshttps
-  namespace: kube-system
+  namespace: traefik
 spec:
   entryPoints:
     - https

@@ -2,7 +2,7 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
   name: traefik-dashboard-authentication
-  namespace: kube-system
+  namespace: traefik
 spec:
   basicAuth:
     realm: "Traefik Dashboard"
@@ -12,7 +12,7 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
   name: wordpress-authentication
-  namespace: kube-system
+  namespace: traefik
 spec:
   basicAuth:
     realm: "wordpress-authentication"
