@@ -1,0 +1,81 @@
+#IngressRoute pour accèder au Dashboard Traefik
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: traefik-dashboard-http
+  namespace: kube-system
+spec:
+  entrypoints:
+  - http
+  routes:
+  - match: Host(`traefik.yourdomain.com`)
+    kind: Rule
+    services:
+    - name: traefik-dashboard
+      port: 8080
+    middlewares:
+    - name: traefik-dashboard-authentication
+---
+#IngressRouteHTTP pour le site Wordpress
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: httpwordpress
+  namespace: kube-system
+spec:
+  entryPoints:
+    - http
+  routes:
+  - match: Host(`wordpress.yourdomain.com`)
+    kind: Rule
+    services:
+    - name: wordpress
+      namespace: wordpress
+      port: 80
+    middlewares:
+    - name: default-headers@file
+
+---
+#IngressRouteHTTPS pour le site Wordpress avec génération d'un certificat Let's Encrypt
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: httpswordpress
+  namespace: kube-system
+spec:
+  entryPoints:
+    - https
+  routes:
+  - match: Host(`wordpress.yourdomain.com`)
+    kind: Rule
+    services:
+    - name: wordpress
+      namespace: wordpress
+      port: 80
+      name: wordpress
+    middlewares:
+    - name: default-headers@file
+  tls:
+    certResolver: letsencrypt
+---
+#IngressRouteHTTPS pour le site Wordpress avec génération d'un certificat Let's Encrypt et un accès proteger via login&mot de passe
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: safewordpresshttps
+  namespace: kube-system
+spec:
+  entryPoints:
+    - https
+  routes:
+  - match: Host(`wordpress.yourdomain.com`)
+    kind: Rule
+    services:
+    - name: wordpress
+      namespace: wordpress
+      port: 80
+      name: wordpress
+    middlewares:
+    - name: wordpress-authentication
+  tls:
+    certResolver: letsencrypt
