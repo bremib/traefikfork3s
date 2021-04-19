@@ -1,6 +1,16 @@
 # traefikfork3s
 Traefik à déployer sur un cluster K3S
 
+Installation de K3S sans Traefik : 
+
+apt update -y 
+
+apt upgrade -y 
+
+apt install curl
+
+curl -sfL https://get.k3s.io | sh -s - --no-deploy=traefik
+
 Dans le fichier ConfigMap.yaml, pensez à remplacer les champs d'adresse e-mail par votre adresse e-mail
 
 Une fois dans le dossier, pour lancer la création de traefik et des ingressroute, tapez la commande :
